@@ -1,0 +1,263 @@
+= アップロード共有?
+Kenichiro Matohara <maroken@kagolug.org>
+:revnumber: 0.9
+:revdate: 2020-12-12(Sat)
+:revremark: 小江戸らぐ 12月のオフな集まり(第221回)@オンライン(Zoom) 「{doctitle}」
+:homepage: https://matoken.org/
+:imagesdir: resources
+:data-uri:
+:backend: revealjs
+:revealjs_theme: serif
+:customcss: resources/my-css.css
+:revealjs_slideNumber: c/t
+:title-slide-transition: none
+:icons: font
+:revealjs_hash: true
+:revealjs_center: true
+:revealjs_autoPlayMedia: true
+:revealjs_transition: false  
+:revealjs_transitionSpeed: fast
+
+== link:https://matoken.org[Kenichiro Matohara(matoken) https://matoken.org]
+
+image::map.jpg[background, size=cover]
+
+* 南隅から参加(鹿児島の右下)
+* 好きなLinuxディストリビューションはDebian
+* お仕事募集 mailto:work@matohara.org
+
+== Rakuten mini 2台目到着
+
+* といってもLTE BAND1対応品への交換
+* 9月に届いてすぐにお願いしていたのがやっと届いた
+* これでdocomo回線でも使いやすくなるはず
+* link:https://corp.mobile.rakuten.co.jp/news/notice/2020/0626_01/[締切は12月いっぱいまでらしいので未だの人はお早めに] https://corp.mobile.rakuten.co.jp/news/notice/2020/0626_01/
+
+
+=== !
+
+image:20201225_23:12:09-2037406.jpg[]
+https://nitter.net/matoken1/status/1338043888531955712#m
+
+=== !
+
+image:20201225_23:12:33-2038022.jpg[]
+https://nitter.net/matoken1/status/1338051036733304832#m
+
+== Epic Gameでゲーム貰おう
+
+* 最近は週に1本無料配信をしていたけど現在毎日無料配信中
+* アカウント登録のみでクレジット登録も不要
+** link:https://www.epicgames.com/store/ja/free-games[毎週無料ゲームが登場 | Epic Games Store]
+* Linux版は(多分)ないけどWine経由で動くものも多い(現在動かなくても動くようになるかも)
+* LutrisでEpic Games Storeを導入すればお手軽
+** link:https://speakerdeck.com/matoken/gemingupuratutohomufalselutrisshao-jie[ゲーミングプラットホームのLutris紹介]
+* (Linux版もあるSteamではウィンターセール中
+
+== OSC20FKの参加者アンケートで書籍当選!
+
+* 回答者少ないらしいのでみんな回答しよう
+* 解答で言及されると嬉しいし
+* (回答者少なくて当選率高いらしいですよ)
+
+=== !
+
+image:20201225_23:12:48-2032089.jpg[]
+https://nitter.net/matoken1/status/1337333237840977920#m
+
+=== 現在ODC2020 Onlineアンケート募集中
+
+https://event.ospn.jp/ODC2020-Online/article/books
+
+image:20201226_05:12:06-2538409.jpg[]
+
+=== 最近の発表
+
+* link:https://www.edocr.com/v/lnpk33mw/matoken/Twitter[Twitterをちっちゃいリソースで]
+** link:https://kagolug.connpass.com/event/197079/[鹿児島Linux勉強会 2020.11@オープンソースカンファレンス福岡(オンライン開催)] 2020-11-28
+* link:https://www.edocr.com/v/wallj4zw/matoken/[常駐アプリ等を軽く出来ないかな?な試み]
+** link:https://koedolug.connpass.com/event/195807/[小江戸らぐ 12月のオフな集まり(第221回)] 2020-12-12
+
+=== 2020.02補足
+
+* 2月の発表でAndroid端末のバッテリーを労れないか? -> 1年経たずにバッテリー劣化の症状が
+* あまり意味はなかったみない……
+** link:https://www.edocr.com/v/dnkmrxzp/matoken/LinuxAndroid[LinuxからAndroidの充電を制御する]
+
+== 誰でもファイルアップロード
+
+* アカウントや認証無しでアップロードさせたい
+* 太古はanonymous FTPを設定して使っていたことも(WU-FTPD)
+* オンラインストレージでは Box, Dropbox, ftopia, Koofr, MEGA, OpenDrive, pCloud等で使えるらしい
+** link:http://free.arinco.org/storage/feature.html#request[特殊な機能を持つ オンラインストレージ | free.]
+
+== 少し前
+
+* Owncloudにアップロードオンリーの共有機能が付いた
+* 早速試したけど程なくEnterpriseのみの機能になる
+* NextcloudのOSS版にも取り込まれたのでOwncloudからNextcloudに移行した
+(当時は移行がとても簡単だった)
+
+== Nextcloud file-drop
+
+* link:https://nextcloud.com/file-drop/[file-drop – Nextcloud]
+* 「URLで共有」->「ファイルドロップ(アップロードのみ)」
+
+=== !
+
+image:20201226_12:12:41-3101781.jpg[]
+
+=== !
+
+image:20201226_12:12:42-3104816.jpg[]
+
+=== Nextcloudを試すのにはsnapがお手軽
+
+Debian sid amd64/Ubuntu 20.04 LTS/Raspberry Pi OS armhfでは以下の手順でOK
+
+[source.shell]
+----
+$ sudo apt update && sudo apt upgrade   <1>
+$ sudo apt install snapd    <2>
+$ sudo snap install nextcloud   <3>
+----
+
+<1> システムのパッケージを最新にする
+<2> snapを使えるように `snapd` パッケージを導入
+<3> snapでnextcloudを導入
+
+ウェブブラウザにIPアドレスを入力するとセットアップ画面が表示されるので管理者ID/PASSWORDを設定
+
+== OnionShare
+
+* https://onionshare.org/
+* Podcastの #セキュリティのアレ 第57回で知った
+http://www.tsujileaks.com/?p=696
+* Tor経由でファイルのやり取りが出来る(Up/Down)
+* 毎回アドレスは変わるので毎回URLのやり取りが必要
+
+https://wiki.matoken.org/linux/tor/onionshare
+
+=== 導入
+
+Linux版はUbuntuはPPAが，Fedoraはパッケージがある，DebianなのでUbuntu版が使えそうだけどsourceをcloneして依存関係の少ないcli版を試してみた
+
+.依存パッケージの導入
+----
+$ apt install -y python3-flask python3-stem python3-pyqt5 python3-crypto \
+python3-socks python3-nautilus tor obfs4proxy python3-pytest python3-pytestqt \
+build-essential fakeroot python3-all python3-stdeb dh-python \
+python3-flask-httpauth python3-distutils python3-psutil python3-socketio \
+python3-flask-socketio python3-qrcode
+----
+
+.sourceの入手
+----
+$ git clone https://github.com/micahflee/onionshare.git
+$ cd onionshare
+----
+
+.cli版
+----
+$ ./dev_scripts/onionshare
+----
+
+=== ファイル受け取りモード
+
+.`--receive` オプションでファイルを受け取れる
+----
+$ ./dev_scripts/onionshare --receive
+----
+
+ファイルは `~/OnionShare/西暦年-月-日/時.分.秒/` 以下に保存される
+
+=== !
+
+image:https://wiki.matoken.org/_media/linux/tor/20201012_01_10_46-2971024.jpg?w=400&tok=077f9c[]
+
+=== その他の機能
+
+* --chat オプションでtext chatモードになる(日本語は化ける)
+* --website オプションで指定したコンテンツをOnion siteで公開できる
+
+=== 問題
+
+* Android版Torブラウザでは利用できなかった
+* ダウンロードが途中で終了して失敗する
+** パッケージ版ではない最新のTorを利用するか，Torを利用しないようにする
+** link:https://github.com/micahflee/onionshare/issues/929[OnionShare closes before downloading is complete · Issue #929 · micahflee/onionshare]
+
+== Droopy
+
+* http://stackp.online.fr/droopy  +
+Python製 New BSD License
+* ファイルのアップロードに使えるミニウェブサーバ
+* Pythonがあればファイル1つで動作するのでお手軽( `Depends: python3:any` )
+
+https://wiki.matoken.org/linux/fileshare/droopy
+
+
+=== install
+
+Debian jessie以降，Ubuntu 16.04 LTS以降でパッケージが存在する
+
+----
+$ sudo apt install droopy
+----
+
+=== 起動
+
+----
+$ droopy
+----
+
+http://localhost:8000 にアクセスするとアップロードページが表示される．ポート変更も可能． ※同じネットワークからも見える．
+
+image:https://wiki.matoken.org/_media/linux/fileshare/20201224_22_12_20-4078272.jpg?w=400&tok=bf76f6[]
+
+=== オプション例
+
+----
+$ droopy -d ~/tmp/upload/ \ <1>
+-m 'hello droopy' \ <2>
+-p ~/tmp/upload/13-3733667.jpg \ <3>
+--publish-files \ <4>
+--chmod 400 <5>
+----
+
+<1> アップロードディレクトリ指定(既定値はカレントディレクトリ)
+<2> メッセージ
+<3> バナー画像
+<4> アップロードディレクトリのファイルをダウンロードできるようリンクを表示する．※このオプションを付けなくてもファイル名がわかっていればダウンロードできてしまう．
+<5> アップロードファイルが8進数で指定したパーミッションになる
+
+=== !
+
+image:https://wiki.matoken.org/_media/linux/fileshare/20201224_22_12_42-4084954.jpg?w=400&tok=faa33b[]
+
+=== FW内で実効
+
+ローカルのPC等で実行する場合ngrok等のトンネリングサービスを使うとお手軽
+
+----
+$ ngrok http localhost:8000 --region jp --log stdout --bind-tls true
+----
+
+=== 問題
+
+* debian packege版で認証をかけようとするとエラーとなり動作しない
+** Upstreamでは修正済のようでこの修正で動作するのを確認
+https://github.com/hdf/Droopy/commit/3ac476fe4a703c1df99aa5208e1646468ee6aa65
+** Debianはreportbugしておいた
+* ファイル名がわかっていれば誰でもダウンロードできてしまう
+** `--chmod 000` のようにしてアップロードファイルのパーミッションを落とすようにしてとりあえず回避できた
+
+== まとめ
+
+* 常時利用するならNextcloud
+** ただし消費リソース量多
+* アドホックに使うならDroopyが便利
+** Python Script1つでok
+* アドホック&TorならOnionShare?
+** 導入が少し面倒?
+
