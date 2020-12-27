@@ -1,7 +1,7 @@
-= アップロード共有?
+=  誰でもファイルアップロード
 Kenichiro Matohara <maroken@kagolug.org>
-:revnumber: 0.9
-:revdate: 2020-12-12(Sat)
+:revnumber: 1.0
+:revdate: 2020-12-26(Sat)
 :revremark: 小江戸らぐ 12月のオフな集まり(第221回)@オンライン(Zoom) 「{doctitle}」
 :homepage: https://matoken.org/
 :imagesdir: resources
@@ -52,7 +52,8 @@ https://nitter.net/matoken1/status/1338051036733304832#m
 * Linux版は(多分)ないけどWine経由で動くものも多い(現在動かなくても動くようになるかも)
 * LutrisでEpic Games Storeを導入すればお手軽
 ** link:https://speakerdeck.com/matoken/gemingupuratutohomufalselutrisshao-jie[ゲーミングプラットホームのLutris紹介]
-* (Linux版もあるSteamではウィンターセール中
+** link:https://matoken.org/blog/2020/06/07/playing-with-epic-games-on-linux-with-lutris/[Lutrisを使ってLinuxでもEpic Gamesで遊ぶ]
+* (Linux版もあるSteamは現在ウィンターセール中)
 
 == OSC20FKの参加者アンケートで書籍当選!
 
@@ -67,6 +68,7 @@ https://nitter.net/matoken1/status/1337333237840977920#m
 
 === 現在ODC2020 Onlineアンケート募集中
 
+参加した人は回答しよう
 https://event.ospn.jp/ODC2020-Online/article/books
 
 image:20201226_05:12:06-2538409.jpg[]
@@ -80,38 +82,41 @@ image:20201226_05:12:06-2538409.jpg[]
 
 === 2020.02補足
 
-* 2月の発表でAndroid端末のバッテリーを労れないか? -> 1年経たずにバッテリー劣化の症状が
-* あまり意味はなかったみない……
+* 2月の発表でAndroid端末のバッテリーを満充電しない(80%で充電終了)ようにして労れないか? -> 1年経たずにバッテリー劣化の症状が
+* あまり意味はなかったみたい……
 ** link:https://www.edocr.com/v/dnkmrxzp/matoken/LinuxAndroid[LinuxからAndroidの充電を制御する]
 
 == 誰でもファイルアップロード
 
-* アカウントや認証無しでアップロードさせたい
-* 太古はanonymous FTPを設定して使っていたことも(WU-FTPD)
-* オンラインストレージでは Box, Dropbox, ftopia, Koofr, MEGA, OpenDrive, pCloud等で使えるらしい
+* アカウントや認証無しでファイルをアップロードしてもらいたい
+* 太古はanonymous FTPを設定して使っていた(WU-FTPD)
+* オンラインストレージでは Box, Dropbox, ftopia, Koofr, MEGA, OpenDrive, pCloud等で使えるらしい?(有料のみ?)
 ** link:http://free.arinco.org/storage/feature.html#request[特殊な機能を持つ オンラインストレージ | free.]
 
 == 少し前
 
-* Owncloudにアップロードオンリーの共有機能が付いた
+* OwnCloudにアップロードオンリーの共有機能が付いた
 * 早速試したけど程なくEnterpriseのみの機能になる
-* NextcloudのOSS版にも取り込まれたのでOwncloudからNextcloudに移行した
+* forkのNextcloudのOSS版にこの機能が取り込まれたのでOwnCloudからNextcloudに移行した
 (当時は移行がとても簡単だった)
 
 == Nextcloud file-drop
 
 * link:https://nextcloud.com/file-drop/[file-drop – Nextcloud]
-* 「URLで共有」->「ファイルドロップ(アップロードのみ)」
+* 共有したいフォルダで「URLで共有」->「ファイルドロップ(アップロードのみ)」
+* 有効期限を設定しなければずっと同じURLで使える
+* 同名のファイルがアップロードされたら ` (2)` のようなデミリタが付く  +
+(hoge.jpgというファイルが3つアップロードされると，`hoge.jpg, hoge (2).jpg, hoge (3).jpg` となる)
 
-=== !
+=== 共有設定
 
 image:20201226_12:12:41-3101781.jpg[]
 
-=== !
+=== アップロード画面
 
 image:20201226_12:12:42-3104816.jpg[]
 
-=== Nextcloudを試すのにはsnapがお手軽
+=== Nextcloudを*試す*のにはsnapがお手軽
 
 Debian sid amd64/Ubuntu 20.04 LTS/Raspberry Pi OS armhfでは以下の手順でOK
 
@@ -134,7 +139,8 @@ $ sudo snap install nextcloud   <3>
 * Podcastの #セキュリティのアレ 第57回で知った
 http://www.tsujileaks.com/?p=696
 * Tor経由でファイルのやり取りが出来る(Up/Down)
-* 毎回アドレスは変わるので毎回URLのやり取りが必要
+* 起動するたびに毎回アドレスは変わるので毎回URLのやり取りが必要
+* ルーターの内側でもTorは外に出られちゃうのでポート開放は(大抵)不要
 
 https://wiki.matoken.org/linux/tor/onionshare
 
@@ -157,12 +163,12 @@ $ git clone https://github.com/micahflee/onionshare.git
 $ cd onionshare
 ----
 
-.cli版
+.cli版起動
 ----
 $ ./dev_scripts/onionshare
 ----
 
-=== ファイル受け取りモード
+=== ファイル受け取りモードで起動
 
 .`--receive` オプションでファイルを受け取れる
 ----
@@ -171,7 +177,7 @@ $ ./dev_scripts/onionshare --receive
 
 ファイルは `~/OnionShare/西暦年-月-日/時.分.秒/` 以下に保存される
 
-=== !
+=== ファイル受け取りモード
 
 image:https://wiki.matoken.org/_media/linux/tor/20201012_01_10_46-2971024.jpg?w=400&tok=077f9c[]
 
@@ -184,7 +190,7 @@ image:https://wiki.matoken.org/_media/linux/tor/20201012_01_10_46-2971024.jpg?w=
 
 * Android版Torブラウザでは利用できなかった
 * ダウンロードが途中で終了して失敗する
-** パッケージ版ではない最新のTorを利用するか，Torを利用しないようにする
+** Debianパッケージ版ではない最新のTorを利用するか，Torを利用しないようにする
 ** link:https://github.com/micahflee/onionshare/issues/929[OnionShare closes before downloading is complete · Issue #929 · micahflee/onionshare]
 
 == Droopy
@@ -231,13 +237,13 @@ $ droopy -d ~/tmp/upload/ \ <1>
 <4> アップロードディレクトリのファイルをダウンロードできるようリンクを表示する．※このオプションを付けなくてもファイル名がわかっていればダウンロードできてしまう．
 <5> アップロードファイルが8進数で指定したパーミッションになる
 
-=== !
+=== Droopy利用例
 
 image:https://wiki.matoken.org/_media/linux/fileshare/20201224_22_12_42-4084954.jpg?w=400&tok=faa33b[]
 
-=== FW内で実効
+=== FW内で実行
 
-ローカルのPC等で実行する場合ngrok等のトンネリングサービスを使うとお手軽
+FW内のPC等で実行する場合ngrok等のトンネリングサービスを使って公開するとお手軽
 
 ----
 $ ngrok http localhost:8000 --region jp --log stdout --bind-tls true
@@ -248,16 +254,16 @@ $ ngrok http localhost:8000 --region jp --log stdout --bind-tls true
 * debian packege版で認証をかけようとするとエラーとなり動作しない
 ** Upstreamでは修正済のようでこの修正で動作するのを確認
 https://github.com/hdf/Droopy/commit/3ac476fe4a703c1df99aa5208e1646468ee6aa65
-** Debianはreportbugしておいた
-* ファイル名がわかっていれば誰でもダウンロードできてしまう
-** `--chmod 000` のようにしてアップロードファイルのパーミッションを落とすようにしてとりあえず回避できた
+** Debianはlink:https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=978020[reportbugしておいた]
+* DLリンクを表示していなくてもファイル名がわかっていれば誰でもダウンロードできてしまう
+** `--chmod 000` のようにしてアップロードファイルのパーミッションを落とすようにしてとりあえず回避
 
 == まとめ
 
 * 常時利用するならNextcloud
-** ただし消費リソース量多
+** ただし導入管理コストや消費リソース量多
 * アドホックに使うならDroopyが便利
 ** Python Script1つでok
 * アドホック&TorならOnionShare?
-** 導入が少し面倒?
+** 導入や説明が少し面倒?
 
