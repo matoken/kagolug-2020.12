@@ -1,8 +1,8 @@
 =  誰でもファイルアップロード
-Kenichiro Matohara <maroken@kagolug.org>
+Kenichiro Matohara(matoken) <maroken@kagolug.org>
 :revnumber: 1.0
 :revdate: 2020-12-26(Sat)
-:revremark: 小江戸らぐ 12月のオフな集まり(第221回)@オンライン(Zoom) 「{doctitle}」
+:revremark: 鹿児島らぐ 12月のオフな集まり「{doctitle}」
 :homepage: https://matoken.org/
 :imagesdir: resources
 :data-uri:
@@ -267,3 +267,11 @@ https://github.com/hdf/Droopy/commit/3ac476fe4a703c1df99aa5208e1646468ee6aa65
 * アドホック&TorならOnionShare?
 ** 導入や説明が少し面倒?
 
+== 奥付
+
+* 発表
+** link:https://kagolug.connpass.com/event/197081/[鹿児島Linux勉強会 2020.12(オンライン開催)] 2020-12-26(sat)
+* 発表者
+** link:https://matoken.org/[Kenichiro Matohara(matoken)]
+* ライセンス
+** CC BY-NC-SA 4.0
